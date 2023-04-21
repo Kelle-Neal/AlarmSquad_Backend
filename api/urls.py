@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('alarmsquadAPI.urls'))
+    #path('api/')
 ]
 
 from django.conf.urls.static import static
