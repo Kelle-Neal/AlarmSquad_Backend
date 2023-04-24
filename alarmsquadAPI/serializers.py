@@ -1,7 +1,7 @@
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import CustomUser
+from .models import *
 
 class CustomUserSerializer(serializers.ModelSerializer):
   email = serializers.EmailField(
@@ -27,3 +27,13 @@ class AlarmSerializer(serializers.ModelSerializer):
   class Meta:
     model = Alarm
     fields = "__all__"
+
+# class AlarmListSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = Alarm
+#     fields = "__all__"
+
+# class AlarmDetailSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = Alarm
+#     fields = "__all__"    

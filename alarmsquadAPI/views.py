@@ -1,20 +1,38 @@
 from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status, permissions, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from .models import CustomUser
 
-from .serializers import CustomUserSerializer
-from .serializers import AlarmSerializer
+from .models import *
+from .serializers import *
 
+# class UserViewSet(viewsets.ModelViewSet):
+#     """ API endpoint that allows users to be viewed or edited."""
+#     queryset = User.objects.all().order_by('-date_joined')
+#     serializer_class = UserSerializer
+#     permission_classes = [permissions.AllowAny]
 
-class AlarmList(viewsets.ModelViewSet):
+# class GroupViewSet(viewsets.ModelViewSet):
+#     """ API endpoint that allows groups to be viewed or edited. """
+#     queryset = Group.objects.all()
+#     serializer_class = GroupSerializer
+#     permission_classes = [permissions.AllowAny] 
+
+class AlarmViewSet(viewsets.ModelViewSet):
   queryset = Alarm.objects.all()
   serializer_class = AlarmSerializer
+
+# class AlarmListViewSet(viewsets.ModelViewSet):
+#   queryset = AlarmList.objects.all()
+#   serializer_class = AlarmListSerializer
+
+# class AlarmDetailViewSet(viewsets.ModelViewSet):
+#   queryset = AlarmDetail.objects.all()
+#   serializer_class = AlarmDetailSerializer
 
 
 

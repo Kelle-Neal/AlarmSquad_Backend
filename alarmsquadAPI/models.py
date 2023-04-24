@@ -29,20 +29,6 @@ class Alarm(models.Model):
   def __str__(self):
     return f'{self.name}'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # class auth_user(AbstractUser):
 #   username = models.CharField()
 #   password = models.CharField()
@@ -108,7 +94,7 @@ class Alarm(models.Model):
   # def __str__(self):
   #   return f'{self.name}'
 
-  # class timerToGroupBridge(mdoels.Model):
+  # class timerToGroupBridge(models.Model):
   #   timerId = models.IntegerField()
   #   timerGroupId = models.IntegerField()
 

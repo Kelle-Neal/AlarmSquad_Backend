@@ -23,21 +23,23 @@ env = environ.Env()
 env_file = os.path.join(BASE_DIR, ".env")
 
 if os.path.isfile(env_file):
-    # Use a local secret file, if provided
-    env.read_env(env_file)
+  # Use a local secret file, if provided
+  env.read_env(env_file)
 # ...
 elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
-    # Pull secrets from Secret Manager
-    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
+  # Pull secrets from Secret Manager
+  project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
 
-    client = secretmanager.SecretManagerServiceClient()
-    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
-    name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
-    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
+  client = secretmanager.SecretManagerServiceClient()
+  settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+  name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
+  payload = client.access_secret_version(
+    name=name).payload.data.decode("UTF-8")
 
-    env.read_env(io.StringIO(payload))
+  env.read_env(io.StringIO(payload))
 else:
-    raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
+  raise Exception(
+    "No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -57,73 +59,74 @@ DEBUG = True
 # to App Engine. This code takes the URL and converts it to both these settings formats.
 APPENGINE_URL = env("APPENGINE_URL", default=None)
 if APPENGINE_URL:
-    # Ensure a scheme is present in the URL before it's processed.
-    if not urlparse(APPENGINE_URL).scheme:
-        APPENGINE_URL = f"https://{APPENGINE_URL}"
+  # Ensure a scheme is present in the URL before it's processed.
+  if not urlparse(APPENGINE_URL).scheme:
+    APPENGINE_URL = f"https://{APPENGINE_URL}"
 
-    CSRF_TRUSTED_ORIGINS = [APPENGINE_URL]
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.gitpod\.io$",
-    ]
-    SECURE_SSL_REDIRECT = True
+  CSRF_TRUSTED_ORIGINS = [APPENGINE_URL]
+  CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.gitpod\.io$",
+  ]
+  SECURE_SSL_REDIRECT = True
 else:
-    CSRF_TRUSTED_ORIGINS = ['http://localhost', 'https://*.gitpod.io']
-    CORS_ALLOW_ALL_ORIGINS = True
+  CSRF_TRUSTED_ORIGINS = ['http://localhost', 'https://*.gitpod.io']
+  CORS_ALLOW_ALL_ORIGINS = True
 
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = "alarmsquadAPI.CustomUser"
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://.*\.gitpod\.io$",
-    r"^https://.*\.web\.app$",
+  r"^https://.*\.gitpod\.io$",
+  r"^https://.*\.web\.app$",
 ]
 
 # Application definition
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders',
-    'alarmsquadAPI',
-    
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'rest_framework',
+  'rest_framework.authtoken',
+  'corsheaders',
+  'alarmsquadAPI',
+  'api',
+
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'corsheaders.middleware.CorsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+  {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+      ],
     },
+  },
 ]
 
 WSGI_APPLICATION = 'api.wsgi.application'
@@ -132,14 +135,14 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # Use django-environ to parse the connection string
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'postgres',
+    'USER': 'postgres',
+    'PASSWORD': 'postgres',
+    'HOST': '127.0.0.1',
+    'PORT': '5432',
+  }
 }
 
 CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
@@ -148,23 +151,22 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 ]
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+  {
+      'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+  },
+  {
+      'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+  },
+  {
+      'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  },
+  {
+      'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+  },
 ]
 
 # Internationalization
@@ -180,26 +182,26 @@ USE_TZ = True
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ), 
+  'DEFAULT_PERMISSION_CLASSES': (
+      'rest_framework.permissions.AllowAny',
+  ),
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+      'rest_framework_simplejwt.authentication.JWTAuthentication',
+  ),
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': False,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
+  'ROTATE_REFRESH_TOKENS': True,
+  'BLACKLIST_AFTER_ROTATION': False,
+  'ALGORITHM': 'HS256',
+  'SIGNING_KEY': SECRET_KEY,
+  'VERIFYING_KEY': None,
+  'USER_ID_FIELD': 'id',
+  'USER_ID_CLAIM': 'user_id',
+  'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+  'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
 # Default primary key field type

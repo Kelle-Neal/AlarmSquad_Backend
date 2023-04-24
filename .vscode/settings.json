@@ -17,5 +17,9 @@
             "database": "postgres",
             "username": "postgres"
         }
+    ],
+    "cSpell.words": [
+        "alarmsquad",
+        "viewsets"
     ]
 }
