@@ -9,6 +9,32 @@ from rest_framework.decorators import action
 from .models import CustomUser
 
 from .serializers import CustomUserSerializer
+from .serializers import AlarmSerializer
+
+
+class AlarmList(viewsets.ModelViewSet):
+  queryset = Alarm.objects.all()
+  serializer_class = AlarmSerializer
+
+
+
+
+  
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class UserCreate(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -22,6 +48,7 @@ class UserCreate(APIView):
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserDetail(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

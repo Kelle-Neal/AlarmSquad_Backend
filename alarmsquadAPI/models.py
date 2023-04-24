@@ -10,22 +10,8 @@ class CustomUser(AbstractUser):
     return self.username
 
 
-# class auth_user(AbstractUser):
-#   username = models.CharField()
-#   password = models.CharField()
-#   firstName = models.CharField()
-#   lastName = models.CharField()
-#   email = models.EmailField()
-#   isActive = models.BooleanField(default=True)
-#   dateJoined = models.DateTimeField()
-
-#   def __str__(self):
-#     return f'{self.name}'
-      
-
-
 class Alarm(models.Model):
-  name = models.CharField(max_length=300)
+  label = models.CharField(max_length=300)
   whatTime = models.TimeField()
   repeat = models.BooleanField(default=False)
   whatDate = models.DateField()
@@ -44,8 +30,37 @@ class Alarm(models.Model):
     return f'{self.name}'
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class auth_user(AbstractUser):
+#   username = models.CharField()
+#   password = models.CharField()
+#   firstName = models.CharField()
+#   lastName = models.CharField()
+#   email = models.EmailField()
+#   isActive = models.BooleanField(default=True)
+#   dateJoined = models.DateTimeField()
+
+#   def __str__(self):
+#     return f'{self.name}'
+      
+
+
+
+
 # class alarmGroup(models.Model):
-#   name = models.CharField()
+#   label = models.CharField()
 #   repeat = models.BooleanField(default=False)
 #   whatDate = models.DateField()
 #   whatDays = models.DateField()
@@ -67,7 +82,7 @@ class Alarm(models.Model):
 #     return f'{self.name}'
 
   # class timer(models.Model): 
-  #   name = models.CharField()
+  #   label = models.CharField()
   #   length = models.TimeField()
   #   # vibrate = models.BooleanField(default=True)
   #   silent = models.BooleanField(default=False)
@@ -82,7 +97,7 @@ class Alarm(models.Model):
   #     return f'{self.name}'
 
   # class timerGroup(models.Model):
-  #   name = models.CharField()
+  #   label = models.CharField()
   #   # vibrate = models.BooleanField(default=True)
   #   silent = models.BooleanField(default=False)
   #   ringtone = models.IntegerField()

@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'alarmsquadAPI',
+    
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
