@@ -1,4 +1,3 @@
-
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import *
@@ -31,7 +30,7 @@ class AlarmSerializer(serializers.ModelSerializer):
 
 class AlarmGroupSerializer(serializers.ModelSerializer):
   class Meta:
-    model = AlarmGroup()
+    model = AlarmGroup
     fields = "__all__"
 
 

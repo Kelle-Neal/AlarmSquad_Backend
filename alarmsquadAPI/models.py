@@ -50,8 +50,6 @@ class AlarmToGroupBridge(models.Model):
   alarmId = models.IntegerField()
   alarmGroupId = models.IntegerField()
 
-  def __str__(self):
-    return f'{self.name}'
 
 
 # class auth_user(AbstractUser):
