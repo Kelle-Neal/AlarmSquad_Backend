@@ -23,10 +23,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
     instance.save()
     return instance
 
+
 class AlarmSerializer(serializers.ModelSerializer):
   class Meta:
     model = Alarm
     fields = "__all__"
+
+class AlarmGroupSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = AlarmGroup()
+    fields = "__all__"
+
+
+  # def create(self, validated_data):
 
 # class AlarmListSerializer(serializers.ModelSerializer):
 #   class Meta:
