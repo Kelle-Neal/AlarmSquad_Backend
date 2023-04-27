@@ -9,26 +9,6 @@ class CustomUser(AbstractUser):
   def __str__(self):
     return self.username
 
-############# ALARMS #############
-class Alarm(models.Model):
-  alarmName = models.CharField(max_length=300)
-  alarmTime = models.TimeField()
-  alarmRepeat = models.BooleanField(default=False, blank=True, null=True)
-  alarmDate = models.DateField(blank=True, null=True)
-  alarmDays = models.DateField(blank=True, null=True)
-  alarmSnooze = models.BooleanField(default=False, blank=True, null=True)
-  # alarmVibrate = models.BooleanField(default=True)
-  alarmSilent = models.BooleanField(default=False, blank=True, null=True)
-  alarmRingtone = models.IntegerField(blank=True, null=True)
-  alarmVolume = models.IntegerField(blank=True, null=True)
-  # alarmIncreaseVolume = models.BooleanField(default=False, blank=True, null=True)
-  alarmInGroup = models.BooleanField(default=False, blank=True, null=True)
-  alarmGroup = models.IntegerField(blank=True, null=True)
-  alarmIsEnabled = models.BooleanField(default=True)
-
-  def __str__(self):
-    return f'{self.alarmName}'
-
 ############# ALARM GROUPS #############
 class AlarmGroup(models.Model):
   aGroupName = models.CharField(max_length=300)
@@ -45,10 +25,36 @@ class AlarmGroup(models.Model):
   def __str__(self):
     return f'{self.aGroupName}'
 
-############# ALARM BRIDGE #############
-class AlarmToGroupBridge(models.Model):
-  alarmId = models.IntegerField()
-  alarmGroupId = models.IntegerField()
+
+############# ALARMS #############
+class Alarm(models.Model):
+  alarmName = models.CharField(max_length=300)
+  alarmTime = models.TimeField()
+  alarmIsEnabled = models.BooleanField(default=True)
+  alarmRepeat = models.BooleanField(default=False, blank=True, null=True)
+  alarmDate = models.DateField(blank=True, null=True)
+  alarmDays = models.DateField(blank=True, null=True)
+  alarmSnooze = models.BooleanField(default=False, blank=True, null=True)
+  # alarmVibrate = models.BooleanField(default=True)
+  alarmSilent = models.BooleanField(default=False, blank=True, null=True)
+  alarmRingtone = models.IntegerField(blank=True, null=True)
+  alarmVolume = models.IntegerField(blank=True, null=True)
+  # alarmIncreaseVolume = models.BooleanField(default=False, blank=True, null=True)
+  # alarmInGroup = models.BooleanField(default=False, blank=True, null=True)
+  alarmGroup = models.ForeignKey(AlarmGroup, on_delete=models.CASCADE, related_name='alarms', blank=True, null=True)
+  @property
+  def alarmInGroup(self):
+    if self.alarmGroup == 'some value':
+      return True
+    else: 
+      return False  
+
+
+  def __str__(self):
+    return f'{self.alarmName}'
+
+
+
 
 
 
@@ -74,7 +80,7 @@ class AlarmToGroupBridge(models.Model):
   #   timerVolume = models.IntegerField()
   #   # timerIncreaseVolume = models.BooleanField(default=False)
   #   timerInGroup = models.BooleanField(default=False)
-  #   timerGroup = models.IntegerField()
+  #   timerGroup = models.ForeignKey(TimerGroup, on_delete=models.CASCADE, related_name='timer')
   #   timerIsEnabled = models.BooleanField(default=True)
 
   #   def __str__(self):
@@ -91,13 +97,6 @@ class AlarmToGroupBridge(models.Model):
 
   # def __str__(self):
   #   return f'{self.tGroupName}'
-
-  # class TimerToGroupBridge(models.Model):
-  #   timerId = models.IntegerField()
-  #   timerGroupId = models.IntegerField()
-
-  # def __str__(self):
-  #   return f'{self.name}'
 
 
   # class ringtones(models.Model):
