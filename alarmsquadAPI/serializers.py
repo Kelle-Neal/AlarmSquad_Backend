@@ -22,10 +22,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
     instance.save()
     return instance
 
+class RingtoneSerializer(serializers.ModelSerializer):
+  soundFile = serializers.FileField(required=True)
 
-class AlarmSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Alarm
+    model = Ringtone
     fields = "__all__"
 
 class AlarmGroupSerializer(serializers.ModelSerializer):
@@ -33,12 +34,22 @@ class AlarmGroupSerializer(serializers.ModelSerializer):
     model = AlarmGroup
     fields = "__all__"
 
-class RingtoneSerializer(serializers.ModelSerializer):
-  soundFile = serializers.FileField(required=True)
-
+class AlarmSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Ringtone
+    model = Alarm
     fields = "__all__"
+
+class TimerGroupSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = TimerGroup
+    fields = "__all__"
+
+class TimerSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Timer
+    fields = "__all__"
+
+
 
   # def create(self, validated_data):
 

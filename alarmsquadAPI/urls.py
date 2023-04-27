@@ -7,9 +7,13 @@ from rest_framework import routers
 from .views import * 
 
 router = routers.DefaultRouter()
-router.register(r'alarms', AlarmViewSet, 'alarm')
-router.register(r'alarmGroups', AlarmGroupViewSet, 'alarmGroup')
 router.register(r'ringtones', RingtoneViewSet, 'ringtone')
+router.register(r'alarmGroups', AlarmGroupViewSet, 'alarmGroup')
+router.register(r'alarms', AlarmViewSet, 'alarm')
+router.register(r'timerGroups', TimerGroupViewSet, 'timerGroup')
+router.register(r'timers', TimerViewSet, 'timer')
+
+
 
 
 

@@ -54,10 +54,6 @@ class RingtoneViewSet(viewsets.ReadOnlyModelViewSet):
   serializer_class = RingtoneSerializer
 
 
-
-
-
-
 ############# ALARM GROUPS #############
 class AlarmGroupView(APIView):
   serializer_class = AlarmGroupSerializer
@@ -126,3 +122,46 @@ class UserDetail(generics.RetrieveAPIView):
   permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
   queryset = CustomUser.objects.all()
   serializer_class = CustomUserSerializer
+
+
+############# TIMER GROUPS #############
+class TimerGroupView(APIView):
+  serializer_class = TimerGroupSerializer
+
+  def get(self, request):
+    timerGroup = [{"name": timerGroup.tGroupName}
+    for timerGroup in TimerGroup.objects.all()]
+    return Response(timerGroup)
+
+  def post(self, request):
+    serializer = TimerGroupSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+      serializer.save()
+    return Response(serializer.data)
+
+
+class TimerGroupViewSet(viewsets.ModelViewSet):
+  queryset = TimerGroup.objects.all()
+  serializer_class = TimerGroupSerializer
+
+
+
+############# TIMERS #############
+class TimerView(APIView):
+  serializer_class = TimerSerializer
+
+  def get(self, request):
+    timer = [{"name": timer.timerName, "time": timer.timerTime}
+    for Timer in Timer.objects.all()]
+    return Response(timer)
+
+  def post(self, request):
+    serializer = TimerSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+      serializer.save()
+    return Response(serializer.data)
+
+
+class TimerViewSet(viewsets.ModelViewSet):
+  queryset = Timer.objects.all()
+  serializer_class = TimerSerializer
