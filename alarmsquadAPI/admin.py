@@ -8,5 +8,6 @@ class AlarmAdmin(admin.ModelAdmin):
 admin.site.register(CustomUser)
 admin.site.register(Alarm)
 admin.site.register(AlarmGroup)
+admin.site.register(Ringtone)
 
 #321_LetsGo

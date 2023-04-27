@@ -49,7 +49,9 @@ def alarm_detail(request, pk):
 
 
 
-
+class RingtoneViewSet(viewsets.ReadOnlyModelViewSet):
+  queryset = Ringtone.objects.all()
+  serializer_class = RingtoneSerializer
 
 
 

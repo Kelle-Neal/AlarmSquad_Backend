@@ -33,6 +33,12 @@ class AlarmGroupSerializer(serializers.ModelSerializer):
     model = AlarmGroup
     fields = "__all__"
 
+class RingtoneSerializer(serializers.ModelSerializer):
+  soundFile = serializers.FileField(required=True)
+
+  class Meta:
+    model = Ringtone
+    fields = "__all__"
 
   # def create(self, validated_data):
 

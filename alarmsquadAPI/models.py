@@ -55,6 +55,15 @@ class Alarm(models.Model):
 
 
 
+############# RINGTONES #############
+
+class Ringtone(models.Model):
+  name = models.CharField(max_length=255)
+  soundFile = models.FileField(upload_to='ringtones/')
+
+def __str__(self):
+  return f'{self.name}'
+
 
 
 
@@ -99,11 +108,7 @@ class Alarm(models.Model):
   #   return f'{self.tGroupName}'
 
 
-  # class ringtones(models.Model):
-  #   name = models.CharField()
 
-  # def __str__(self):
-  #   return f'{self.name}'
 
 
   # class AlertTypes(models.Model):

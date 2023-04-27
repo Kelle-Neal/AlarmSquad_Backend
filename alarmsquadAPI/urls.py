@@ -8,7 +8,9 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register(r'alarms', AlarmViewSet, 'alarm')
-router.register(r'alarmGroups', AlarmGroupViewSet)
+router.register(r'alarmGroups', AlarmGroupViewSet, 'alarmGroup')
+router.register(r'ringtones', RingtoneViewSet, 'ringtone')
+
 
 
 urlpatterns = [
