@@ -13,7 +13,6 @@ router.register(r'alarmGroups', AlarmGroupViewSet, 'alarmGroup')
 router.register(r'alarms', AlarmViewSet, 'alarm')
 router.register(r'timerGroups', TimerGroupViewSet, 'timerGroup')
 router.register(r'timers', TimerViewSet, 'timer')
-# router.register(r'alarms/(?P<pk>\d+)/edit', views.AlarmViewSet.edit_alarm, basename='edit_alarm')
 
 
 
@@ -27,8 +26,11 @@ urlpatterns = [
   path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
   path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),  # override sjwt stock token
   path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-  # path('alarms/<int:pk>/edit/', AlarmViewSet.as_view({'post': 'edit_alarm'}), name='edit_alarm'),
-  # path('alarms/<int:pk>/', views.delete_alarm, name='delete_alarm'),
+  
+  path('alarms/<int:pk>/edit/', AlarmViewSet.as_view({'get': 'edit_alarm'}), name='edit_alarm'),
+  path('alarms/<int:pk>/delete/', AlarmViewSet.as_view({'delete': 'destroy'}), name='delete_alarm'),
+  path('alarms/<int:pk>/partial_update/', AlarmViewSet.as_view({'patch': 'partial_update'}), name='alarm-partial-update'),
+
 
 
 ]

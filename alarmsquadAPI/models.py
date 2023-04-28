@@ -10,7 +10,6 @@ class CustomUser(AbstractUser):
         return self.username
 
 ############# RINGTONES #############
-
 class Ringtone(models.Model):
     name = models.JSONField()
     soundFile = models.FileField(upload_to='ringtones/')
@@ -36,7 +35,6 @@ class AlarmGroup(models.Model):
 
     def __str__(self):
         return f'{self.aGroupName}'
-
 
 ############# ALARMS #############
 class Alarm(models.Model):

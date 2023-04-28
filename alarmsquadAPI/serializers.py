@@ -38,7 +38,7 @@ class AlarmGroupSerializer(serializers.ModelSerializer):
 
 ############# ALARMS #############
 class AlarmSerializer(serializers.ModelSerializer):
-    ringtone = RingtoneSerializer(required=False)
+    # ringtone = RingtoneSerializer(required=False)
     alarmGroup = serializers.PrimaryKeyRelatedField(queryset=AlarmGroup.objects.all(), required=False)
     class Meta:
         model = Alarm

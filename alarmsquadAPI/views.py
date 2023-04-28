@@ -18,56 +18,64 @@ class AlarmViewSet(viewsets.ModelViewSet):
     queryset = Alarm.objects.all()
     serializer_class = AlarmSerializer
 
-    def edit_alarm(self, request, pk=None):
-      alarm = self.get_object()
-      serializer = self.get_serializer(alarm, data=request.data, partial=True)
-      serializer.is_valid(raise_exception=True)
-      serializer.save()
-      return Response(serializer.data)
-
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
-        return self.edit_alarm(request, *args, **kwargs)    
+        return super().partial_update(request, *args, **kwargs)
 
-@csrf_exempt
-def alarms(request):
-    if request.method == 'GET':
-        alarms = Alarm.objects.all()
-        return JsonResponse({'alarms': list(alarms.values())})
+    def edit_alarm(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
-    elif request.method == 'POST':
-        data = json.loads(request.body)
-        alarm = Alarm()
-        alarm.alarmGroup = data['alarmGroup']
-        alarm.alarmDate = data['alarmDate']
-        alarm.alarmTime = data['alarmTime']
-        alarm.alarmVolume = data['alarmVolume']
-        alarm.ringtone = data['ringtone']
-        alarm.save()
-        return JsonResponse({'alarm': model_to_dict(alarm)})
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-@csrf_exempt
-def edit_alarm(request, pk):
-    alarm = get_object_or_404(Alarm, pk=pk)
 
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        alarm.alarmGroup = data['alarmGroup']
-        alarm.alarmDate = data['alarmDate']
-        alarm.alarmTime = data['alarmTime']
-        alarm.alarmVolume = data['alarmVolume']
-        alarm.ringtone = data['ringtone']
-        alarm.save()
-        return JsonResponse({'alarm': model_to_dict(alarm)})
 
-    return render(request, 'edit_alarm.html', {'alarm': alarm})        
+# @csrf_exempt
+# def alarms(request):
+#     if request.method == 'GET':
+#         alarms = Alarm.objects.all()
+#         return JsonResponse({'alarms': list(alarms.values())})
 
-@csrf_exempt
-def delete_alarm(request, alarm_id):
-  alarm = get_object_or_404(Alarm, id=alarm_id)
-  if request.method == 'DELETE':
-    alarm.delete()
-    return JsonResponse({'message': 'Alarm deleted successfully'})
+#     elif request.method == 'POST':
+#         data = json.loads(request.body)
+#         alarm = Alarm()
+#         alarm.alarmGroup = data['alarmGroup']
+#         alarm.alarmDate = data['alarmDate']
+#         alarm.alarmTime = data['alarmTime']
+#         alarm.alarmVolume = data['alarmVolume']
+#         alarm.ringtone = data['ringtone']
+#         alarm.save()
+#         return JsonResponse({'alarm': model_to_dict(alarm)})
+
+# @csrf_exempt
+# def edit_alarm(request, pk):
+#     alarm = get_object_or_404(Alarm, pk=pk)
+
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         alarm.alarmGroup = data['alarmGroup']
+#         alarm.alarmDate = data['alarmDate']
+#         alarm.alarmTime = data['alarmTime']
+#         alarm.alarmVolume = data['alarmVolume']
+#         alarm.ringtone = data['ringtone']
+#         alarm.save()
+#         return JsonResponse({'alarm': model_to_dict(alarm)})
+
+#     return render(request, 'edit_alarm.html', {'alarm': alarm})        
+
+# @csrf_exempt
+# def delete_alarm(request, alarm_id):
+#   alarm = get_object_or_404(Alarm, id=alarm_id)
+#   if request.method == 'DELETE':
+#     alarm.delete()
+#     return JsonResponse({'message': 'Alarm deleted successfully'})
 
 
 ############# RINGTONES #############
