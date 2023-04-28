@@ -22,6 +22,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     instance.save()
     return instance
 
+############# RINGTONES #############
 class RingtoneSerializer(serializers.ModelSerializer):
   soundFile = serializers.FileField(required=True)
 
@@ -29,36 +30,28 @@ class RingtoneSerializer(serializers.ModelSerializer):
     model = Ringtone
     fields = "__all__"
 
+############# ALARM GROUPS #############
 class AlarmGroupSerializer(serializers.ModelSerializer):
   class Meta:
     model = AlarmGroup
     fields = "__all__"
 
+############# ALARMS #############
 class AlarmSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Alarm
-    fields = "__all__"
+    ringtone = RingtoneSerializer(required=False)
+    alarmGroup = serializers.PrimaryKeyRelatedField(queryset=AlarmGroup.objects.all(), required=False)
+    class Meta:
+        model = Alarm
+        fields = "__all__"
 
+############# TIMER GROUPS #############
 class TimerGroupSerializer(serializers.ModelSerializer):
   class Meta:
     model = TimerGroup
     fields = "__all__"
 
+############# TIMERS #############
 class TimerSerializer(serializers.ModelSerializer):
   class Meta:
     model = Timer
     fields = "__all__"
-
-
-
-  # def create(self, validated_data):
-
-# class AlarmListSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = Alarm
-#     fields = "__all__"
-
-# class AlarmDetailSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = Alarm
-#     fields = "__all__"    

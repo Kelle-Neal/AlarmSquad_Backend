@@ -12,12 +12,14 @@ class CustomUser(AbstractUser):
 ############# RINGTONES #############
 
 class Ringtone(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.JSONField()
     soundFile = models.FileField(upload_to='ringtones/')
 
-
-def __str__(self):
-    return f'{self.name}'
+    def __str__(self):
+        if self.name.get('name'):
+            return self.name.get('name')
+        else:
+            return 'Ringtone'
 
 ############# ALARM GROUPS #############
 class AlarmGroup(models.Model):
@@ -27,7 +29,7 @@ class AlarmGroup(models.Model):
     aGroupDays = models.DateField(blank=True, null=True)
     # aGroupVibrate = models.BooleanField(default=True)
     aGroupSilent = models.BooleanField(default=False, blank=True, null=True)
-    aGroupRingtone = models.IntegerField(blank=True, null=True)
+    ringtone = models.ForeignKey(Ringtone, on_delete=models.PROTECT, blank=True, null=True)
     aGroupVolume = models.IntegerField(blank=True, null=True)
     # aGroupIncreaseVolume = models.BooleanField(default=False, blank=True, null=True)
     aGroupIsEnabled = models.BooleanField(default=True)
@@ -43,26 +45,27 @@ class Alarm(models.Model):
     alarmIsEnabled = models.BooleanField(default=True)
     alarmRepeat = models.BooleanField(default=False, blank=True, null=True)
     alarmDate = models.DateField(blank=True, null=True)
-    alarmDays = models.DateField(blank=True, null=True)
-    alarmSnooze = models.BooleanField(default=False, blank=True, null=True)
-    # alarmVibrate = models.BooleanField(default=True)
+    alarmDays = models.CharField(max_length=100, blank=True, null=True)
     alarmSilent = models.BooleanField(default=False, blank=True, null=True)
-    ringtone = models.ForeignKey(
-      Ringtone, on_delete=models.PROTECT, blank=True, null=True)
     alarmVolume = models.IntegerField(blank=True, null=True)
-    # alarmIncreaseVolume = models.BooleanField(default=False, blank=True, null=True)
-    # alarmInGroup = models.BooleanField(default=False, blank=True, null=True)
+    snoozeTime = models.IntegerField(blank=True, null=True)
+    vibration = models.BooleanField(default=False, blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
+
+    ringtone = models.ForeignKey(Ringtone, on_delete=models.PROTECT, blank=True, null=True)
+
     alarmGroup = models.ForeignKey(
-      AlarmGroup, on_delete=models.CASCADE, related_name='alarms', blank=True, null=True)
+      AlarmGroup, on_delete=models.SET_NULL, related_name='alarms', blank=True, null=True)
     @property
     def alarmInGroup(self):
-        if self.alarmGroup == 'some value':
+        if self.alarmGroup:
             return True
         else:
             return False
 
     def __str__(self):
         return f'{self.alarmName}'
+
 
 
 ############# TIMER GROUPS #############
