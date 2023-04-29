@@ -10,3 +10,11 @@ vscode:
     - ms-python.python
     - mtxr.sqltools-driver-pg
     - mtxr.sqltools
+
+ports:
+  - port: 5432
+    visibility: public
+  - port: 8000
+    visibility: public
+  - port: 39509
+    visibility: public
