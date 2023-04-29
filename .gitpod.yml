@@ -11,10 +11,3 @@ vscode:
     - mtxr.sqltools-driver-pg
     - mtxr.sqltools
 
-ports:
-  - port: 5432
-    onOpen: open-preview
-  - port: 8000
-    onOpen: open-preview
-  - port: 39509
-    onOpen: open-preview
