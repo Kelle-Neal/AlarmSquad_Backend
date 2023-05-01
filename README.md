@@ -38,6 +38,3 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 ]
 
 
-# kelle
-# kelle@test.com
-# 123_ABC..
