@@ -54,7 +54,7 @@ class Alarm(models.Model):
     ringtone = models.ForeignKey(Ringtone, on_delete=models.PROTECT, blank=True, null=True)
 
     alarmGroup = models.ForeignKey(
-      AlarmGroup, on_delete=models.SET_NULL, related_name='alarms', blank=True, null=True)
+      AlarmGroup, on_delete=models.SET_NULL, related_name='alarms', blank=True, null=True, default=None)
     @property
     def alarmInGroup(self):
         if self.alarmGroup:
