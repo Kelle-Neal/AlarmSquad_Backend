@@ -32,6 +32,7 @@ class AlarmGroup(models.Model):
     aGroupVolume = models.IntegerField(blank=True, null=True)
     # aGroupIncreaseVolume = models.BooleanField(default=False, blank=True, null=True)
     aGroupIsEnabled = models.BooleanField(default=True)
+    
 
     def __str__(self):
         return f'{self.aGroupName}'
